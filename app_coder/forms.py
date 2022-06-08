@@ -1,19 +1,21 @@
 import datetime
 from django import forms
 from django.forms import ModelForm
-from app_coder.models import Profesor
+from app_coder.models import Cliente
 
 
-class CourseForm(forms.Form):
+class PedidosForm(forms.Form):
     name = forms.CharField(max_length=40, min_length=3, label='Nombre')
-    code = forms.IntegerField(label='Camada')
+    last_name = forms.CharField(max_length=40, min_length=3, label='Apellido')
+    telephone = forms.IntegerField(label='Celular')
+    respuesto = forms.CharField(max_length=40, min_length=3, label='Tipo Respuesto')
 
 
-class ProfesorForm(forms.Form):
+class ClienteForm(forms.Form):
     name = forms.CharField(max_length=40, min_length=3, label='Nombre')
     last_name = forms.CharField(max_length=40, label='Apellido')
     email = forms.EmailField(label='Correo electrónico')
-    profession = forms.CharField(max_length=40, label='Profesión')
+    cuit = forms.IntegerField(label='CUIT')
 
 # class ProfesorForm(ModelForm):
 #     class Meta:
@@ -21,8 +23,13 @@ class ProfesorForm(forms.Form):
 #         fields = '__all__'
 
 
-class HomeworkForm(forms.Form):
-    name = forms.CharField(max_length=40, min_length=3, label='Nombre de la Entrega')
+class EnviosForm(forms.Form):
+    name = forms.CharField(max_length=40, min_length=3, label='Nombre')
+    last_name = forms.CharField(max_length=40, min_length=3, label='Apellido')
+    city = forms.CharField(max_length=40, min_length=3, label='Ciudad')
+    adress = forms.CharField(max_length=40, min_length=3, label='Direccion')
+    telephone = forms.IntegerField(label='Telefono/Celular')
+    code_postal = forms.IntegerField(label='Codigo Postal')
     due_date = forms.DateField(
         label='Fecha de Entrega',
         widget=forms.TextInput(attrs={'placeholder': 'yyyy-mm-dd'})

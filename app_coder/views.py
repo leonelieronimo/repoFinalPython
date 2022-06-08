@@ -1,85 +1,85 @@
 from django.shortcuts import render
 from django.db.models import Q
 
-from app_coder.models import Course, Student, Profesor, Homework
-from app_coder.forms import CourseForm, ProfesorForm, HomeworkForm
+from app_coder.models import Pedidos, Stock, Cliente, Envios
+from app_coder.forms import PedidosForm, ClienteForm, EnviosForm
 
 
 def index(request):
     return render(request, "app_coder/home.html")
 
 
-def profesors(request):
-    profesors = Profesor.objects.all()
+def clientes(request):
+    clientes = Cliente.objects.all()
 
     context_dict = {
-        'profesors': profesors
+        'clientes': clientes
     }
 
     return render(
         request=request,
         context=context_dict,
-        template_name="app_coder/profesors.html"
+        template_name="app_coder/clientes.html"
     )
 
 
-def courses(request):
-    courses = Course.objects.all()
+def pedidos(request):
+    pedidos = Pedidos.objects.all()
 
     context_dict = {
-        'courses': courses
+        'pedidos': pedidos
     }
 
     return render(
         request=request,
         context=context_dict,
-        template_name="app_coder/courses.html"
+        template_name="app_coder/pedidos.html"
     )
 
 
-def students(request):
-    students = Student.objects.all()
+def stock(request):
+    stock = Stock.objects.all()
 
     context_dict = {
-        'students': students
+        'stock': stock
     }
 
     return render(
         request=request,
         context=context_dict,
-        template_name="app_coder/students.html"
+        template_name="app_coder/stock.html"
     )
 
 
-def homeworks(request):
-    homeworks = Homework.objects.all()
+def envios(request):
+    envios = Envios.objects.all()
 
     context_dict = {
-        'homeworks': homeworks
+        'envios': envios
     }
 
     return render(
         request=request,
         context=context_dict,
-        template_name="app_coder/homeworks.html"
+        template_name="app_coder/envios.html"
     )
 
 
 def form_hmtl(request):
 
     if request.method == 'POST':
-        course = Course(name=request.POST['name'], code=request.POST['code'])
-        course.save()
+        pedido = Pedidos(name=request.POST['name'], code=request.POST['code'])
+        pedido.save()
 
-        courses = Course.objects.all()
+        pedidos = Pedidos.objects.all()
         context_dict = {
-            'courses': courses
+            'pedidos': pedidos
         }
 
         return render(
             request=request,
             context=context_dict,
-            template_name="app_coder/courses.html"
+            template_name="app_coder/pedidos.html"
         )
 
     return render(
@@ -88,99 +88,107 @@ def form_hmtl(request):
     )
 
 
-def course_forms_django(request):
+def pedidos_forms_django(request):
     if request.method == 'POST':
-        course_form = CourseForm(request.POST)
-        if course_form.is_valid():
-            data = course_form.cleaned_data
-            course = Course(name=data['name'], code=data['code'])
-            course.save()
+        pedido_form = PedidosForm(request.POST)
+        if pedido_form.is_valid():
+            data = pedido_form.cleaned_data
+            pedido = Pedidos(name=data['name'],
+                last_name=data['last_name'],
+                telephone=data['telephone'],  
+                respuesto=data['respuesto'])
+            pedido.save()
 
-            courses = Course.objects.all()
+            pedidos = Pedidos.objects.all()
             context_dict = {
-                'courses': courses
+                'pedidos': pedidos
             }
             return render(
                 request=request,
                 context=context_dict,
-                template_name="app_coder/courses.html"
+                template_name="app_coder/pedidos.html"
             )
 
-    course_form = CourseForm(request.POST)
+    pedido_form = PedidosForm(request.POST)
     context_dict = {
-        'course_form': course_form
+        'pedido_form': pedido_form
     }
     return render(
         request=request,
         context=context_dict,
-        template_name='app_coder/course_django_forms.html'
+        template_name='app_coder/pedidos_django_forms.html'
     )
 
 
-def profesor_forms_django(request):
+def clientes_forms_django(request):
     if request.method == 'POST':
-        profesor_form = ProfesorForm(request.POST)
-        if profesor_form.is_valid():
-            data = profesor_form.cleaned_data
-            profesor = Profesor(
+        cliente_form = ClienteForm(request.POST)
+        if cliente_form.is_valid():
+            data = cliente_form.cleaned_data
+            cliente = Cliente(
                 name=data['name'],
                 last_name=data['last_name'],
                 email=data['email'],
-                profession=data['profession'],
+                cuit=data['cuit'],
             )
-            profesor.save()
+            cliente.save()
 
-            profesors = Profesor.objects.all()
+            clientes = Cliente.objects.all()
             context_dict = {
-                'profesors': profesors
+                'clientes': clientes
             }
             return render(
                 request=request,
                 context=context_dict,
-                template_name="app_coder/profesors.html"
+                template_name="app_coder/clientes.html"
             )
 
-    profesor_form = ProfesorForm(request.POST)
+    cliente_form = ClienteForm(request.POST)
     context_dict = {
-        'profesor_form': profesor_form
+        'cliente_form': cliente_form
     }
     return render(
         request=request,
         context=context_dict,
-        template_name='app_coder/profesor_django_forms.html'
+        template_name='app_coder/clientes_django_forms.html'
     )
 
 
-def homework_forms_django(request):
+def envios_forms_django(request):
     if request.method == 'POST':
-        homework_form = HomeworkForm(request.POST)
-        if homework_form.is_valid():
-            data = homework_form.cleaned_data
-            homework = Homework(
+        envios_form = EnviosForm(request.POST)
+        if envios_form.is_valid():
+            data = envios_form.cleaned_data
+            envio = Envios(
                 name=data['name'],
+                last_name=data['last_name'],
+                city=data['city'],
+                adress=data['adress'],
+                telephone=data['telephone'],
+                code_postal=data['code_postal'],              
                 due_date=data['due_date'],
                 is_delivered=data['is_delivered'],
             )
-            homework.save()
+            envio.save()
 
-            homeworks = Homework.objects.all()
+            envios = Envios.objects.all()
             context_dict = {
-                'homeworks': homeworks
+                'envios': envios
             }
             return render(
                 request=request,
                 context=context_dict,
-                template_name="app_coder/homeworks.html"
+                template_name="app_coder/envios.html"
             )
 
-    homework_form = HomeworkForm(request.POST)
+    envios_form = EnviosForm(request.POST)
     context_dict = {
-        'homework_form': homework_form
+        'envios_form': envios_form
     }
     return render(
         request=request,
         context=context_dict,
-        template_name='app_coder/homework_django_forms.html'
+        template_name='app_coder/envios_django_forms.html'
     )
 
 
@@ -188,23 +196,23 @@ def search(request):
     context_dict = dict()
     if request.GET['text_search']:
         search_param = request.GET['text_search']
-        courses = Course.objects.filter(name__contains=search_param)
+        pedidos = Pedidos.objects.filter(last_name__contains=search_param)
         context_dict = {
-            'courses': courses
+            'pedidos': pedidos
         }
-    elif request.GET['code_search']:
-        search_param = request.GET['code_search']
-        courses = Course.objects.filter(code__contains=search_param)
+    elif request.GET['respuesto_search']:
+        search_param = request.GET['respuesto_search']
+        pedidos = Pedidos.objects.filter(respuesto__contains=search_param)
         context_dict = {
-            'courses': courses
+            'pedidos': pedidos
         }
     elif request.GET['all_search']:
         search_param = request.GET['all_search']
         query = Q(name__contains=search_param)
-        query.add(Q(code__contains=search_param), Q.OR)
-        courses = Course.objects.filter(query)
+        query.add(Q(respuesto__contains=search_param), Q.OR)
+        pedidos = Pedidos.objects.filter(query)
         context_dict = {
-            'courses': courses
+            'pedidos': pedidos
         }
 
     return render(

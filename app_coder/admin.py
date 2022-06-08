@@ -1,11 +1,11 @@
 from django.contrib import admin
 
-from app_coder.models import Course, Student, Profesor, Homework
+from app_coder.models import Pedidos, Stock, Cliente, Envios
 
-admin.site.register(Course)
+admin.site.register(Pedidos)
 
-admin.site.register(Student)
+admin.site.register(Stock)
 
-admin.site.register(Profesor)
+admin.site.register(Cliente)
 
-admin.site.register(Homework)
+admin.site.register(Envios)

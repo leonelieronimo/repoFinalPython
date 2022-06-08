@@ -5,10 +5,9 @@
 <h2>Lista de Estudiantes</h2>
 <hr></hr>
 <ul>
-    {% for student in students %}
+    {% for stocks in stock %}
         <li>
-            Estudiante: {{student.name}} {{student.last_name}}
-            -- e-mail: {{student.email}}
+            Respuesto: {{stocks.respuesto}}
         </li>
     {% endfor %}
 </ul>
